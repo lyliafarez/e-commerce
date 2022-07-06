@@ -15,7 +15,7 @@
                <nuxt-link to="/auth/register" class="hover:text-blue-300">Register</nuxt-link>
            </div>
            <div v-else class="hidden md:flex space-x-6">
-               <div v-show="this.$auth.user.role_id === 2" class="space-x-3">
+               <div v-show="this.$auth.user.role_id === AdminId" class="space-x-3">
                 <nuxt-link to="/users/" class="hover:text-blue-300">Users space</nuxt-link>
                 <nuxt-link to="/products/" class="hover:text-blue-300">products space</nuxt-link>
                </div>
@@ -48,7 +48,7 @@
        </div>
        <div class="md:hidden" v-else>
            <div id="menu" class=" flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
-               <div v-show="this.$auth.user.role_id === 2" class="flex flex-col space-y-6 ">
+               <div v-show="this.$auth.user.role_id === AdminId" class="flex flex-col space-y-6 ">
                 <nuxt-link to="/users/" class="hover:text-blue-300">Users space</nuxt-link>
                 <nuxt-link to="/products/" class="hover:text-blue-300">products space</nuxt-link>
              </div>
@@ -63,6 +63,17 @@
 
 <script>
 export default {
+
+    data() {
+        return {
+            AdminId: '',
+        }
+    },
+    
+    mounted() {
+        this.getAdminId()
+    },
+
     methods:{
         toggleBtn(){
             const btn = document.getElementById('menu-btn')
@@ -73,6 +84,13 @@ export default {
         },
         logout(){
             this.$auth.logout()
+        },
+
+        async getAdminId(){
+
+            const AdminId = await this.$axios.$get('/api/AdminRole');
+            this.AdminId = AdminId
+
         }
     }
 }

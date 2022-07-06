@@ -27,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/users/create',[UserController::class,'store']); 
 // get user status before login
 Route::get('/user/status/{email}',[UserController::class,'getStatus']);
+//get admin role id
+Route::get('/AdminRole',[UserController::class,'getAdminRole']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     
@@ -40,6 +42,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     //user enable and disable
     Route::post('/user/enable/{user}',[UserController::class,'enableUser']);
     Route::post('/user/disable/{user}',[UserController::class,'disableUser']);
+
+    /* //get admin role id
+    Route::get('/AdminRole',[UserController::class,'getAdminRole']); */
 
     //manipulating purchases
     Route::post('/purchase/{product}',[PurchaseController::class,'store']);

@@ -42,6 +42,13 @@ class UserController extends Controller
         return response()->json(['message'=>'user enabled']);
     }
 
+    //get admin role id
+    public function getAdminRole()
+    {
+        $AdminRole_id = Role::where('label','Admin')->first()->id;
+        return response()->json($AdminRole_id);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
