@@ -1,0 +1,21 @@
+<template>
+    <div class="flex flex-col justify-start rounded-lg drop-shadow-md border-2 border-inherit ">
+        <nuxt-link :to="`/products/${productInfo.id}`"><img :src=" `http://localhost:8000/images/${productInfo.image_path}`" alt="" class="rounded-lg h-30 "></nuxt-link>
+        <div class="info-section flex flex-col p-3 space-y-2">
+            <span class="text-sm px-2 bg-blue-200 rounded-lg w-1/4 text-center ">{{ productInfo.category.label}}</span>
+            <h4 class="text-sm">{{productInfo.title}}</h4>
+            <p>{{productInfo.price}}$</p>
+        </div>
+       
+    </div>
+</template>
+<script>
+export default {
+    props: ['productInfo'],
+
+    
+}
+</script>
+<style>
+    
+</style>
