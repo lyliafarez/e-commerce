@@ -7,7 +7,10 @@
           <h2 class="mt-6 text-center text-3xl font-extrabold text-blue-500">
               Sign in to your account
               </h2>
-          <p v-show="showAlert" class="text-center bg-red-200 py-2 px-2"> Your account is disabled ! please contact admin</p>
+          <div  v-show="this.showAlert" class="flex flex-row justify-center bg-red-200 py-2 px-2 text-white space-x-3">
+            <p class="text-center"> Your account is disabled ! please contact <nuxt-link to="/contactForm" class="text-blue-300">Admin</nuxt-link></p>
+            <XCircleIcon v-on:click="toggle"/>
+          </div>
         </div>
         <form  @submit.prevent="login" class="mt-8 space-y-6"  >
           
@@ -78,10 +81,10 @@
 </template>
 <script>
 import { LockClosedIcon } from "@vue-hero-icons/outline"
-import { LoginIcon } from "@vue-hero-icons/outline"
+import { LoginIcon, XCircleIcon } from "@vue-hero-icons/outline"
 export default {
 
-    components:{LockClosedIcon, LoginIcon,},
+    components:{LockClosedIcon, LoginIcon,XCircleIcon},
 
     data:() => ({
             form: {
@@ -109,6 +112,9 @@ export default {
                     this.errors = 'Could not sign you in with those credentials'
                 }
             }
+        },
+        toggle(){
+          this.showAlert = false
         }
     }
 }

@@ -43,9 +43,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/user/enable/{user}',[UserController::class,'enableUser']);
     Route::post('/user/disable/{user}',[UserController::class,'disableUser']);
 
-    /* //get admin role id
-    Route::get('/AdminRole',[UserController::class,'getAdminRole']); */
-
     //manipulating purchases
     Route::post('/purchase/{product}',[PurchaseController::class,'store']);
     Route::put('/purchase/quantity/{product}',[PurchaseController::class,'updateCount']);

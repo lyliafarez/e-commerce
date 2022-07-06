@@ -10,7 +10,7 @@
            <!-- Menu -->
            <div class="hidden md:flex space-x-6" v-if="!this.$auth.loggedIn">
                <nuxt-link to="/" class="hover:text-blue-300">Home</nuxt-link>
-               <nuxt-link to="" class="hover:text-blue-300">Product</nuxt-link>
+               <nuxt-link to="contactForm" class="hover:text-blue-300">Contact Us</nuxt-link>
                <nuxt-link to="" class="hover:text-blue-300">About Us</nuxt-link>
                <nuxt-link to="/auth/register" class="hover:text-blue-300">Register</nuxt-link>
            </div>
@@ -38,7 +38,7 @@
        <div class="md:hidden" v-if="!this.$auth.loggedIn">
            <div id="menu" class="  flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
             <nuxt-link to="" class="hover:text-blue-300">Pricing</nuxt-link> 
-            <nuxt-link to="" class="hover:text-blue-300">Products</nuxt-link> 
+            <nuxt-link to="" class="hover:text-blue-300">Contact Us</nuxt-link> 
             <nuxt-link to="/" class="hover:text-blue-300">About Us</nuxt-link> 
             <nuxt-link to="" class="hover:text-blue-300">Careers</nuxt-link> 
             <nuxt-link to="/auth/register" class="hover:text-blue-300">Register</nuxt-link> 
@@ -69,7 +69,7 @@ export default {
             AdminId: '',
         }
     },
-    
+
     mounted() {
         this.getAdminId()
     },
