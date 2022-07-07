@@ -53,12 +53,12 @@
 							<tr  v-for="item in cart " :key="item.id" >
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<div class="flex items-center">
-										<div class="flex-shrink-0 w-30 h-40">
-											<img class="w-full h-full"
+										<div class="flex-shrink-0 w-1/2">
+											<img class="w-1/2 h-1/2"
                                                :src="`http://localhost:8000/images/${item.product.image_path}`"
                                                 alt="" />
                                         </div>
-											<div class="ml-3">
+											<div class="ml-3 w-1/2">
 												<p class="text-gray-900 whitespace-no-wrap">
 													{{item.product.title}}
 												</p>

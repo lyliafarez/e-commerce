@@ -3,8 +3,10 @@
         <div class="flex flex-col ">
            
             <div class="flex flex-col justify-center items-center space-x-14  md:flex-row ">
-                <img :src="`http://localhost:8000/images/${product.image_path}`" alt="" class="h-1/4 w-1/2">
-                <div class="flex flex-col space-y-3">
+                <div class="img flex justify-center w-1/2">
+                <img :src="`http://localhost:8000/images/${product.image_path}`" alt="" class="w-1/2 h-1/2">
+                </div>
+                <div class="flex flex-col space-y-3 w-1/2">
                     <h1 class=" text-3xl">{{ product.title}}</h1>
                     <p>category : {{category.label}}</p>
                     <p> ref : {{product.ref}}</p>
@@ -63,7 +65,7 @@
                     <button type="submit" class="rounded-lg bg-blue-300 px-6 py-3 text-white">Post</button>
                 </div>    
             </form>
-            <div class="comments-section my-6">
+            <div class="comments-section my-6 space-y-3">
                 <comment-card v-for="comment in comments" :key="comment.id" :comment="comment"/>
             </div>
         </div>

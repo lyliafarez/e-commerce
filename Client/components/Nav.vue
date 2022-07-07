@@ -10,7 +10,7 @@
            <!-- Menu -->
            <div class="hidden md:flex space-x-6" v-if="!this.$auth.loggedIn">
                <nuxt-link to="/" class="hover:text-blue-300">Home</nuxt-link>
-               <nuxt-link to="contactForm" class="hover:text-blue-300">Contact Us</nuxt-link>
+               <nuxt-link to="/contactForm" class="hover:text-blue-300">Contact Us</nuxt-link>
                <nuxt-link to="" class="hover:text-blue-300">About Us</nuxt-link>
                <nuxt-link to="/auth/register" class="hover:text-blue-300">Register</nuxt-link>
            </div>
@@ -35,26 +35,24 @@
            </button>
        </div>
        <!-- Mobile Menu -->
-       <div class="md:hidden" v-if="!this.$auth.loggedIn">
-           <div id="menu" class="  flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
-            <nuxt-link to="" class="hover:text-blue-300">Pricing</nuxt-link> 
-            <nuxt-link to="" class="hover:text-blue-300">Contact Us</nuxt-link> 
-            <nuxt-link to="/" class="hover:text-blue-300">About Us</nuxt-link> 
-            <nuxt-link to="" class="hover:text-blue-300">Careers</nuxt-link> 
-            <nuxt-link to="/auth/register" class="hover:text-blue-300">Register</nuxt-link> 
-            <nuxt-link to="/auth/login" class="hover:text-blue-300">Login</nuxt-link> 
+       <div class="md:hidden" v-if="!this.$auth.loggedIn" >
+           <div v-show="showMenu" id="menu" class="  flex-col items-center  self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
+            <nuxt-link to="/contactForm" class="hover:text-blue-300"><button @click="toggleBtn">Contact us</button></nuxt-link> 
+            <nuxt-link to="/" class="hover:text-blue-300"><button @click="toggleBtn">Home</button></nuxt-link> 
+            <nuxt-link to="/auth/register" class="hover:text-blue-300"><button @click="toggleBtn">Register</button></nuxt-link> 
+            <nuxt-link to="/auth/login" class="hover:text-blue-300"><button @click="toggleBtn">Login</button></nuxt-link> 
             
            </div>
        </div>
        <div class="md:hidden" v-else>
-           <div id="menu" class=" flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
+           <div v-show="showMenu" id="menu" class=" flex-col items-center self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
                <div v-show="this.$auth.user.role_id === AdminId" class="flex flex-col space-y-6 ">
-                <nuxt-link to="/users/" class="hover:text-blue-300">Users space</nuxt-link>
-                <nuxt-link to="/products/" class="hover:text-blue-300">products space</nuxt-link>
+                <nuxt-link to="/users/" class="hover:text-blue-300"><button @click="toggleBtn">Users space</button></nuxt-link>
+                <nuxt-link to="/products/" class="hover:text-blue-300"><button @click="toggleBtn">Products space</button></nuxt-link>
              </div>
-            <nuxt-link to="/products/products" class="hover:text-blue-300">Products</nuxt-link>
-            <nuxt-link to="/dashboard" class="hover:text-blue-300">Dashboard</nuxt-link>
-            <nuxt-link to="/products/cart" class="hover:text-blue-300">Cart</nuxt-link>
+            <nuxt-link to="/products/products" class="hover:text-blue-300"><button @click="toggleBtn">Products</button></nuxt-link>
+            <nuxt-link to="/dashboard" class="hover:text-blue-300"><button @click="toggleBtn">Dashboard</button></nuxt-link>
+            <nuxt-link to="/products/cart" class="hover:text-blue-300"><button @click="toggleBtn">Cart</button></nuxt-link>
             <a href=""@click.prevent="logout">Logout</a>  
            </div>
        </div>
@@ -67,6 +65,7 @@ export default {
     data() {
         return {
             AdminId: '',
+            showMenu: false,
         }
     },
 
@@ -80,9 +79,11 @@ export default {
             const nav=document.getElementById('menu')
             btn.classList.toggle('open')
             nav.classList.toggle('flex')
-            nav.classList.toggle('hidden')
+            //nav.classList.toggle('hidden')
+            this.showMenu = !this.showMenu
         },
         logout(){
+            this.toggleBtn()
             this.$auth.logout()
         },
 

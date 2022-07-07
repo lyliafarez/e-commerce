@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return transliterator_create_from_rules;
+        return true;
     }
 
     /**
@@ -26,9 +26,9 @@ class ProductRequest extends FormRequest
         return [
             'title' => 'required | max:255',
             'description' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'price' => 'required',
-            'ref' => 'requied',
+            'ref' => 'required',
             'image' =>'required | mimes:jpg,png,jpeg |max:5048',
         ];
     }
