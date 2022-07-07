@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\MainController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\ContactController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\PurchaseController;
 
@@ -29,6 +30,8 @@ Route::post('/users/create',[UserController::class,'store']);
 Route::get('/user/status/{email}',[UserController::class,'getStatus']);
 //get admin role id
 Route::get('/AdminRole',[UserController::class,'getAdminRole']);
+// Send contact mail 
+Route::post('/mail',[ContactController::class,'store']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     
@@ -42,7 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     //user enable and disable
     Route::post('/user/enable/{user}',[UserController::class,'enableUser']);
     Route::post('/user/disable/{user}',[UserController::class,'disableUser']);
-
+    
     //manipulating purchases
     Route::post('/purchase/{product}',[PurchaseController::class,'store']);
     Route::put('/purchase/quantity/{product}',[PurchaseController::class,'updateCount']);
@@ -60,5 +63,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/cart/sumProducts',[PurchaseController::class,'sumProductsPrice']);
     // showing all categories
     Route::get('/categories',[MainController::class,'showCategories']);
+
     
 });

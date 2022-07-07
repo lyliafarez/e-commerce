@@ -36,7 +36,21 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    ['nuxt-mail', {
+      message: {
+        to: 'me@gmail.com',
+      },
+      smtp: {
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          user: '15470d473476dc',
+          pass: 'bbc0996c010b09'
+        },
+      },
+    }],
+    
   ],
 
   axios: {
