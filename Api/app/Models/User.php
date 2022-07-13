@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Like;
 use App\Models\Role;
+use App\Models\Order;
 use App\Models\Comment;
 use App\Models\Purchase;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -13,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +46,17 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

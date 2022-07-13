@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Stripe\Order;
 use App\Models\User;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ class Purchase extends Model
         'user_id',
         'product_id',
         'quantity',
+        'command_status'
     ];
 
     public function user()
@@ -26,4 +28,9 @@ class Purchase extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+     public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    } 
 }

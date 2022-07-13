@@ -18,10 +18,12 @@
                <div v-show="this.$auth.user.role_id === AdminId" class="space-x-3">
                 <nuxt-link to="/users/" class="hover:text-blue-300">Users space</nuxt-link>
                 <nuxt-link to="/products/" class="hover:text-blue-300">products space</nuxt-link>
+                 <nuxt-link to="/order/" class="hover:text-blue-300">orders space</nuxt-link>
                </div>
                <nuxt-link to="/products/products" class="hover:text-blue-300">Products</nuxt-link>
                <nuxt-link to="/dashboard" class="hover:text-blue-300">Dashboard</nuxt-link>
                <nuxt-link to="/products/cart" class="hover:text-blue-300">Cart</nuxt-link>
+               <nuxt-link to="/order/details" class="hover:text-blue-300">My orders</nuxt-link>
                <a href=""@click.prevent="logout">Logout</a>   
            </div>
            <!-- Button -->
@@ -49,10 +51,12 @@
                <div v-show="this.$auth.user.role_id === AdminId" class="flex flex-col space-y-6 ">
                 <nuxt-link to="/users/" class="hover:text-blue-300"><button @click="toggleBtn">Users space</button></nuxt-link>
                 <nuxt-link to="/products/" class="hover:text-blue-300"><button @click="toggleBtn">Products space</button></nuxt-link>
+                <nuxt-link to="/order/" class="hover:text-blue-300"><button @click="toggleBtn">Orders space</button></nuxt-link>
              </div>
             <nuxt-link to="/products/products" class="hover:text-blue-300"><button @click="toggleBtn">Products</button></nuxt-link>
             <nuxt-link to="/dashboard" class="hover:text-blue-300"><button @click="toggleBtn">Dashboard</button></nuxt-link>
             <nuxt-link to="/products/cart" class="hover:text-blue-300"><button @click="toggleBtn">Cart</button></nuxt-link>
+             <nuxt-link to="/order/details" class="hover:text-blue-300"><button @click="toggleBtn">My orders</button></nuxt-link>
             <a href=""@click.prevent="logout">Logout</a>  
            </div>
        </div>

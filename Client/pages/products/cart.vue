@@ -10,7 +10,9 @@
                 <h3>subTotal</h3>
                 <p class="font-bold text-2xl">{{total}}$</p>
             </div>
-            <button class="bg-black text-white text-xl py-3 mx-3 mt-8">Pay</button>
+            
+                 <button class="bg-black text-white text-xl py-3 mx-3 mt-8"><nuxt-link to="/order/checkout">Pay</nuxt-link></button>
+           
             <p class="text-gray-400 px-8 text-center my-3"> Apply coupon code follow the steps downbelow</p>
 
                 <div class="payment flex flex-col">
@@ -49,13 +51,16 @@ export default {
 
             const cart = await this.$axios.$get('/api/purchase/cart')
             this.cart = cart
+            this.$store.commit('setCart',cart)
+            
         },
 
         async getSum(){
 
             const sum = await this.$axios.$get('/api/cart/sumProducts')
-            console.log(sum)
             this.total = sum
+             this.$store.commit('setTotal',sum)
+            
         }
     }
 }

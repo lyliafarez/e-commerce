@@ -13,8 +13,13 @@
                 <div class="content w-2/4">
                     <p>{{ comment.content}}</p>
                 </div>
-                <div class="like w-1/4 flex justify-end">
-                    <HeartIcon class="text-blue-500"/>
+                <div v-if="!liked" class="like w-1/4 flex justify-end">
+                    <button @click="likeComment"><HeartIcon class="text-blue-500"/></button>
+                    <p>{{ nbLikes }}</p>
+                </div>
+                <div v-else class="like w-1/4 flex justify-end">
+                    <button @click="unlike"><HeartIcon class="text-green-500 bg-blue"/></button>
+                    <p>{{ nbLikes }}</p>
                 </div>
             </div>
             <div class="date flex justify-end px-2 py-2">
@@ -25,12 +30,53 @@
 </template>
 <script>
 import { HeartIcon, UserIcon } from "@vue-hero-icons/outline"
+
 export default {
-    components:{
-        HeartIcon,
-        UserIcon,
+
+    data() {
+        return {
+            nbLikes: '',
+            liked: '',
+        }
     },
-    props: ["comment"]
+    components:{
+        UserIcon,
+        HeartIcon,
+    },
+    props: ["comment"],
+
+    mounted() {
+       this.countLike()
+       this.likedBy()
+    },
+
+    methods: {
+        async likeComment(){
+            await this.$axios.$post(`/api/likes/${this.comment.id}`) 
+            this.liked = !this.liked
+
+        },
+
+        async countLike(){
+            const count = await this.$axios.$get(`/api/likes/count/${this.comment.id}`)
+            this.nbLikes = count
+           
+        },
+
+        async likedBy(){
+            const resp = await this.$axios.$get(`/api/comments/${this.comment.id}`)
+            this.liked = resp
+            
+        },
+
+        async unlike(){
+            await this.$axios.$delete(`/api/likes/${this.comment.id}`)
+            this.liked = !this.liked
+        }
+
+
+
+    },
 }
 </script>
 <style>

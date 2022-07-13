@@ -116,7 +116,7 @@ export default {
                 price : this.form.price,
                 category_id : this.form.category_id, */
                 )
-                .then( resp => { console.log(resp)})
+                .then( resp => { this.$router.push("/products/products");})
                 .catch( err => { console.log(err)})
         } 
         /* async addProduct(){

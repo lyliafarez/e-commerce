@@ -77,7 +77,9 @@ import { ArrowCircleLeftIcon } from "@vue-hero-icons/outline"
                     let errors = []
                     //await this.$axios.$get('sanctum/csrf-cookie')
                     await this.$axios.$post('/api/users/create', this.form)
-                        .then((resp) => {})
+                        .then((resp) => {
+                          this.$router.push("/users/");
+                        })
                         .catch((err) => {
                             if (err.response.status = 422) {
                                 errors = err.response.data.errors

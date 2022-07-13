@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\api;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +20,7 @@ class PurchaseController extends Controller
     public function index()
     {   
         $user_id = Auth::user()->id;
-        $purchases = Purchase::with(['product','user'])->where('user_id',$user_id)->get();
+        $purchases = Purchase::with(['product','user'])->where('user_id',$user_id)->where('command_status',1)->get();
 
         return response()->json($purchases);
     }
@@ -31,6 +33,17 @@ class PurchaseController extends Controller
     public function create()
     {
         //
+    }
+    //get purchased items
+
+    public function purchasedProducts(User $user){
+        $user_id = Auth::user()->id;
+       $purchases = Purchase::where('user_id',$user_d)->where('command_status',1)->get();
+       foreach($purchases as $purchase){
+           $purchase->command_status = 0;
+           $purchase->save();
+       }
+       return response()->json([$purchases,$user]);
     }
 
     /**
@@ -51,6 +64,7 @@ class PurchaseController extends Controller
         $purchase->user_id = $id ;
         $purchase->product_id = $product->id;
         $purchase->quantity = 1;
+        $purchase->command_status = 1;
 
         $purchase->save();
         $product->save();
@@ -100,7 +114,7 @@ class PurchaseController extends Controller
         // get id of auth user
         $user_id = Auth::user()->id;
 
-        $purchase = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->first();
+        $purchase = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->where('command_status',1)->first();
         $quantity = $purchase->quantity;
         $purchase->quantity = $quantity+1;
         //managing product stock
@@ -121,7 +135,7 @@ class PurchaseController extends Controller
         // get id of auth user
         $user_id = Auth::user()->id;
 
-        $purchase = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->first();
+        $purchase = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->where('command_status',1)->first();
         $quantity = $purchase->quantity;
         $purchase->quantity = $quantity-1;
         //managing stock
@@ -136,7 +150,7 @@ class PurchaseController extends Controller
     
     public function countProduct(Product $product){
         $user_id = Auth::user()->id;
-        $products = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->get();
+        $products = Purchase::where('user_id',$user_id)->where('product_id',$product->id)->where('command_status',1)->get();
         $count_products = $products->count();
 
         return response()->json($count_products);
@@ -145,7 +159,7 @@ class PurchaseController extends Controller
     public function sumProductsPrice(){
         $sum=0;
         $user_id = Auth::user()->id;
-        $purchases = Purchase::where('user_id',$user_id)->with('product')->get();
+        $purchases = Purchase::where('user_id',$user_id)->where('command_status',1)->with('product')->get();
         if($purchases){
             foreach($purchases as $purchase){
                 $sum = $sum + ($purchase->quantity * $purchase->product->price);
@@ -167,5 +181,13 @@ class PurchaseController extends Controller
         $product->save();
         $purchase->delete();
         return response()->json(['message' => 'purchase deleted'],200);
+    }
+
+    //delete purchase record
+    public function delete()
+    {
+        $user_id = Auth::user()->id;
+        Purchase::where('user_id',$user_id)->delete();
+        return response()->json(['massage'=>'items purchased']);
     }
 }
