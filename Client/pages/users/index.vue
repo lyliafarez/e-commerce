@@ -1,6 +1,8 @@
 <template >
     <div>
+       
       <users-table :users="users" :results="results"/>
+       <Spinner v-show="loading" class="flex justify-center items-center"/>
      <!--  <pagination :results="results" :users="users"/>  -->
     </div>
 </template>
@@ -13,6 +15,7 @@ export default {
     data:() =>({
         users: [],
         results: {},
+        loading: true,
     }),
     components:{
         UsersTable
@@ -29,6 +32,7 @@ export default {
                 console.log(res.users)
                 this.users = res.users
                 this.results = res.users
+                this.loading = false
             })
             .catch (err=>{console.log(err)})
         }

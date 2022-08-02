@@ -59,12 +59,7 @@
 							<tr v-for="order in orders" :key="order.id" >
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<div class="flex items-center">
-										<div class="flex-shrink-0 w-10 h-10">
-											<img class="w-full h-full rounded-full"
-                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                                alt="" />
-                                        </div>
-											<div class="ml-3">
+											<div class="">
 												<p class="text-gray-900 whitespace-no-wrap">
 													{{ order.id}}
 												</p>
@@ -76,7 +71,7 @@
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p class="text-gray-900 whitespace-no-wrap">
-									{{ order.total}}
+									{{ order.total/100}}
 									</p>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -124,7 +119,9 @@
 								</td>
 							</tr>
 						</tbody>
+						
 					</table>
+					
 					<!-- <div
 						class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
 						<span class="text-xs xs:text-sm text-gray-900">
@@ -142,15 +139,23 @@
                             </button>
 						</div>
 					</div> -->
+					
 				</div>
+				<!-- <Pagination :results="orders"/> -->
+
 			</div>
 		</div>
 	</div>
     </div>
 </template>
 <script>
+
+import LaravelVuePagination from '@/plugins/vueLaravelPagination'
 export default {
     props: ["orders"],
+	components:{
+	
+	},
 	methods: {
 		async shipOrder(order){
 			const resp = await this.$axios.$put(`/api/order/shippingStatus/${order}`)

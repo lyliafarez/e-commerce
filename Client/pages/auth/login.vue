@@ -81,18 +81,15 @@ export default {
     methods: {
         async login(){
             try { 
+                
                 const user = await this.$axios.$get(`/api/user/status/${this.form.email}`)
-                .then( async (resp) => {
-                  const userStatus = user[0].status
-                console.log(userStatus)
-                 if(userStatus == 1){
-                await this.$auth.loginWith('laravelSanctum',{data:this.form})
+                const userStatus = user.status
+                if(userStatus === 1){
+                  await this.$auth.loginWith('laravelSanctum',{data:this.form})
                 }
                 else{
-                  this.showAlert = true;
-                } 
-                })
-                .catch( err => this.errors = 'Could not sign you in with those credentials')
+                   this.showAlert = true;
+                }
             } catch (error) {
                 if(error.response.status = 422){
                     this.errors = 'Could not sign you in with those credentials'

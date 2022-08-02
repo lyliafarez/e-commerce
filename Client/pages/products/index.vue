@@ -1,6 +1,7 @@
 <template>
     <div class="container mx-auto">
         <products-table :products="products"/>
+         <Spinner v-show="loading" class="flex justify-center items-center"/>
     </div>
 </template>
 <script>
@@ -10,6 +11,7 @@ export default {
     data() {
         return {
             products: [],
+            loading: true,
         }
     },
     components: {
@@ -25,6 +27,7 @@ export default {
             const products = await this.$axios.$get('/api/product');
             console.log(products)
             this.products = products
+            this.loading = false
         }
     },
 }

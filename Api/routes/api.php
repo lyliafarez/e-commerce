@@ -43,10 +43,14 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     // product resources
     Route::resource('/product',ProductController::class);
-
+    //add promo percentage of a product
+    Route::post('/product/promotion/{product}',[ProductController::class,'promotion']);
     //user enable and disable
     Route::post('/user/enable/{user}',[UserController::class,'enableUser']);
     Route::post('/user/disable/{user}',[UserController::class,'disableUser']);
+    //reduce user s points in case used when purchase
+    Route::put('/user/points/{points}/{user}',[UserController::class,'removePoints']);
+    //edit user
     
     //manipulating purchases
     Route::post('/purchase/{product}',[PurchaseController::class,'store']);
@@ -73,7 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete('/likes/{comment}',[LikeController::class,'destroy']);
 
     //payment
-    Route::post('/pay',[UserController::class,'purchase']);
+    Route::post('/pay/{points}',[UserController::class,'purchase']);
 
     //delete items from cart after purchase
     Route::delete('/purchase/delete',[PurchaseController::class,'delete']);

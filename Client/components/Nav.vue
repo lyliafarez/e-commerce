@@ -16,13 +16,13 @@
            </div>
            <div v-else class="hidden md:flex space-x-6">
                <div v-show="this.$auth.user.role_id === AdminId" class="space-x-3">
-                <nuxt-link to="/users/" class="hover:text-blue-300">Users space</nuxt-link>
-                <nuxt-link to="/products/" class="hover:text-blue-300">products space</nuxt-link>
-                 <nuxt-link to="/order/" class="hover:text-blue-300">orders space</nuxt-link>
+                <nuxt-link to="/users/" class="hover:text-blue-300">Users</nuxt-link>
+                <nuxt-link to="/products/" class="hover:text-blue-300">Products</nuxt-link>
+                 <nuxt-link to="/order/" class="hover:text-blue-300">Orders</nuxt-link>
                </div>
-               <nuxt-link to="/products/products" class="hover:text-blue-300">Products</nuxt-link>
-               <nuxt-link to="/dashboard" class="hover:text-blue-300">Dashboard</nuxt-link>
-               <nuxt-link to="/products/cart" class="hover:text-blue-300">Cart</nuxt-link>
+               <nuxt-link to="/products/products" class="hover:text-blue-300">Our Products</nuxt-link>
+               <nuxt-link to="/dashboard" class="hover:text-blue-300">Home</nuxt-link>
+               <nuxt-link to="/products/cart" class="hover:text-blue-300"> Cart </nuxt-link>
                <nuxt-link to="/order/details" class="hover:text-blue-300">My orders</nuxt-link>
                <a href=""@click.prevent="logout">Logout</a>   
            </div>
@@ -49,11 +49,11 @@
        <div class="md:hidden" v-else>
            <div v-show="showMenu" id="menu" class=" flex-col items-center self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] ">
                <div v-show="this.$auth.user.role_id === AdminId" class="flex flex-col space-y-6 ">
-                <nuxt-link to="/users/" class="hover:text-blue-300"><button @click="toggleBtn">Users space</button></nuxt-link>
-                <nuxt-link to="/products/" class="hover:text-blue-300"><button @click="toggleBtn">Products space</button></nuxt-link>
-                <nuxt-link to="/order/" class="hover:text-blue-300"><button @click="toggleBtn">Orders space</button></nuxt-link>
+                <nuxt-link to="/users/" class="hover:text-blue-300"><button @click="toggleBtn">Users</button></nuxt-link>
+                <nuxt-link to="/products/" class="hover:text-blue-300"><button @click="toggleBtn">Products</button></nuxt-link>
+                <nuxt-link to="/order/" class="hover:text-blue-300"><button @click="toggleBtn">Orders</button></nuxt-link>
              </div>
-            <nuxt-link to="/products/products" class="hover:text-blue-300"><button @click="toggleBtn">Products</button></nuxt-link>
+            <nuxt-link to="/products/products" class="hover:text-blue-300"><button @click="toggleBtn">Our Products</button></nuxt-link>
             <nuxt-link to="/dashboard" class="hover:text-blue-300"><button @click="toggleBtn">Dashboard</button></nuxt-link>
             <nuxt-link to="/products/cart" class="hover:text-blue-300"><button @click="toggleBtn">Cart</button></nuxt-link>
              <nuxt-link to="/order/details" class="hover:text-blue-300"><button @click="toggleBtn">My orders</button></nuxt-link>
@@ -64,8 +64,11 @@
 </template>
 
 <script>
+import { ShoppingCartIcon } from "@vue-hero-icons/outline"
 export default {
-
+    components: {
+        ShoppingCartIcon ,
+    },
     data() {
         return {
             AdminId: '',

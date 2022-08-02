@@ -65,7 +65,7 @@ class PurchaseController extends Controller
         $purchase->product_id = $product->id;
         $purchase->quantity = 1;
         $purchase->command_status = 1;
-
+        $product->stock = $stock - 1;
         $purchase->save();
         $product->save();
         
@@ -118,7 +118,7 @@ class PurchaseController extends Controller
         $quantity = $purchase->quantity;
         $purchase->quantity = $quantity+1;
         //managing product stock
-        $product->stock = $stock -  $purchase->quantity;
+        $product->stock = $stock - 1;
 
         $purchase->save();
         $product->save();
@@ -162,7 +162,7 @@ class PurchaseController extends Controller
         $purchases = Purchase::where('user_id',$user_id)->where('command_status',1)->with('product')->get();
         if($purchases){
             foreach($purchases as $purchase){
-                $sum = $sum + ($purchase->quantity * $purchase->product->price);
+                $sum = $sum + ($purchase->quantity * ($purchase->product->price - (($purchase->product->price * $purchase->product->promotion)/100)));
             }
         }
         

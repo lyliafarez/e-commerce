@@ -32,7 +32,7 @@ class UserController extends Controller
 
     //get user status
     public function getStatus( $email){
-        $found = User::where('email',$email)->get();
+        $found = User::where('email',$email)->first();
         return response()->json($found);
     }
 
@@ -89,8 +89,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::where('id',$id)->get();
-        return response(['user'=>$user]);
+        $user = User::where('id',$id)->first();
+        return response($user);
     }
 
     /**
@@ -100,15 +100,31 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        if($request->password){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return response()->json($user);
+    }
+    //remove used points
+    public function removePoints($points,User $user){
+        $user->points = $user->points - $points;
+        $user->save();
+        return response()->json($user);
     }
 
     //pay items in the cart 
-    public function purchase(Request $request)
+    public function purchase(Request $request,$points)
     {   
         $authUser = Auth::user();
+        $authUser->points = $authUser->points - $points;
+        $authUser->save();
         
     
         //return response()->json( $min_dateFormated);
@@ -132,13 +148,24 @@ class UserController extends Controller
 
             $payment = $payment->asStripePaymentIntent();
 
-            $order = $user->orders()
+            /* $order = $user->orders()
                 ->create([
                     'transaction_id' => $payment->charges->data[0]->id,
                     'total' => $payment->charges->data[0]->amount,
 
-                ]);
-               
+                ]); */
+
+                $order = new Order;
+                $order->user_id = Auth::user()->id;
+                $order->transaction_id = $payment->charges->data[0]->id;
+                $order->total = $payment->charges->data[0]->amount;
+                $order->save();
+
+                //add points for user
+                $nbPoints = $order->total/100 ;
+                $authUser->points = $nbPoints;
+                $authUser->save();
+   
 
              foreach (json_decode($request->input('cart'), true) as $item) {
                 DB::table('order_product')->insert(['order_id'=>$order->id,'product_id'=>$item['product_id'],'quantity'=>$item['quantity'],'user_id'=>$authUser->id]);

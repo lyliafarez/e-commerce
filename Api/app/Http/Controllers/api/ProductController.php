@@ -65,7 +65,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::where('id',$id)->with('category')->get();
+        $product = Product::where('id',$id)->with('category')->first();
         return response()->json($product);
     }
 
@@ -79,6 +79,13 @@ class ProductController extends Controller
     {
         //
     }
+    //add promotion to product
+    public function promotion(Request $request,Product $product)
+    {
+        $product->promotion = $request->input('promo');
+        $product->save();
+        return response()->json($product);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -87,9 +94,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {   
-    
+        $product = Product::find($id);
+        $product->title = $request->title;
+        $product->ref = $request->ref;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->category_id = $request->category_id;
+        
+        if($request->image){
+            return response()->json("test");
+            $newImageName = time().'-'.$request->title.'.'.$request->image->extension();
+            $request->image->move(public_path('images'),$newImageName);
+            $product->image_path = $newImageName;
+
+        }
+        return response()->json($request);
+        $product->save();
+        
+
+        return response()->json($product);
     }
 
     /**

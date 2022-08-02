@@ -1,10 +1,9 @@
-<template >
-   <div class="container mx-auto  flex flex-col  space-y-4">
+<template>
+    <div class="container mx-auto  flex flex-col  space-y-4">
        <div class="mx-12 flex flex-row jutify-center space-x-3">
-            <ArrowCircleLeftIcon class="text-blue-400"/>
          <nuxt-link to="/products/" class="text-blue-400 text-left">back</nuxt-link>
         </div>
-       <form action="" method="post" class="flex flex-col space-y-4 justify-center items-center " enctype="multipart/form-data" @submit.prevent="addProduct" >
+       <form action="" method="post" class="flex flex-col space-y-4 justify-center items-center " enctype="multipart/form-data" @submit.prevent="editProduct" >
          <h1 class="text-blue-500 text-center text-2xl">Add product</h1>
            <div class="title ">
                <input name="title" type="text" v-model="form.title" placeholder="title..." class="border-2 border-gray-300 rounded-lg w-full ">
@@ -42,18 +41,11 @@
           <button type="submit" class="my-3 bg-blue-500 px-4 py-3 text-white rounded-lg"> Create </button>
            
        </form>
-
-
-
-
-
        
    </div>
 </template>
 <script>
-import { ArrowCircleLeftIcon } from "@vue-hero-icons/outline"
 export default {
-     components: {ArrowCircleLeftIcon},
     data() {
         return {
             categories: [],
@@ -68,39 +60,37 @@ export default {
                
             },
             selected: '',
-
         }
     },
-
     mounted() {
         this.getCategories()
-        
+        this.getProduct()
     },
-    
-    methods: {
-
+    methods:{
         async getCategories(){
             const categories = await this.$axios.$get('/api/categories');
             this.categories = categories
-            //console.log(categories);
+            console.log(this.categories)
+            
         },
 
         previewFiles(e) {
-           // console.log(this.$refs.myFiles.files[0] instanceof File);
             this.form.image = e.target.files[0] 
-            /* const fd = new FormData();
-            fd.append('image', this.form.image, this.form.image.name)
-            console.log('test',fd) */
-            //console.log(this.form.image)
-            //this.form.test = formData.append("image",e.target.files[0] ,e.target.files[0].name )
-           
-            
 
         },
+        async getProduct(){
+            const product = await this.$axios.$get(`/api/product/${this.$route.params.id}`)
+            console.log(product)
+            this.form.title = product.title
+            this.form.ref = product.ref
+            this.form.price = product.price
+            this.form.stock = product.stock
+            this.category_id = product.category_id
+            this.description = product.description
+        },
 
-        async addProduct(){
+        async editProduct(){
             const fd = new FormData();
-            fd.append('image', this.form.image, this.form.image.name)
             //fd.append('image', this.form.image, this.form.image.name)
             fd.append('title', this.form.title)
             fd.append('ref', this.form.ref)
@@ -108,30 +98,13 @@ export default {
             fd.append('stock', this.form.stock)
             fd.append('category_id', this.form.category_id)
             fd.append('description', this.form.description)
+            const resp = await this.$axios.$put(`/api/product/${this.$route.params.id} `,fd);
+            console.log(resp)
 
-
-            await this.$axios.$post('/api/product', fd
-                /* title : this.form.title,
-                ref : this.form.ref,
-                price : this.form.price,
-                category_id : this.form.category_id, */
-                )
-                .then( resp => { this.$router.push("/products/products");})
-                .catch( err => { console.log(err)})
-        } 
-        /* async addProduct(){
-            console.log(this.form.image)
-           const formData = new FormData()
-            formData.append("image",this.form.image ,this.form.image.name )
-            console.log(formData)
-
-            await this.$axios.$post('/api/product',formData)
-                .then( resp => { console.log(resp)})
-                .catch( err => { console.log(err)})
-        } */
+        }
     }
 }
 </script>
-<style >
+<style>
     
 </style>

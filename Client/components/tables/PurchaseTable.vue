@@ -37,11 +37,16 @@
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 									Price
 								</th>
+								<th
+									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+									Promotion
+								</th>
 								
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 									Quantity
 								</th>
+								
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 								Total
@@ -69,6 +74,9 @@
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p class="text-gray-900 whitespace-no-wrap">{{item.product.price}}$</p>
 								</td>
+								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+									<p class="text-gray-900 whitespace-no-wrap">{{item.product.promotion}}%</p>
+								</td>
 								
 									
 								</td>
@@ -79,7 +87,7 @@
                                     <div class="flex flex-row items-center">
                                         <button v-on:click="addItem(item.product.id)"><PlusCircleIcon/></button>
                                         <p  class="text-gray-900 whitespace-no-wrap mx-2">{{item.quantity}}</p>
-                                        <button v-on:click="removeItem(item.product.id,item.quantity,item.product.id)"><MinusCircleIcon/></button>
+                                        <button v-on:click="removeItem(item.id,item.quantity,item.product.id)"><MinusCircleIcon/></button>
                                     </div>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -145,7 +153,7 @@ export default {
             let count = quantity
 
             if(count > 1 ){
-            await this.$axios.$put(`/api/purchase/quantityReduce/${id}`)
+            await this.$axios.$put(`/api/purchase/quantityReduce/${idProduct}`)
             .then( resp => { console.log(resp)})
             .catch( err => {
                 if (err.response.status = 422) {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('status');
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->integer('points')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

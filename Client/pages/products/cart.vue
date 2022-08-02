@@ -8,7 +8,17 @@
             <h1 class="font-bold text-2xl mb-3">Resume of your commande </h1>
             <div class="flex flex-row justify-between">
                 <h3>subTotal</h3>
-                <p class="font-bold text-2xl">{{total}}$</p>
+                <p class="font-bold text-2xl">{{getTotal}}$</p>
+            </div>
+            <div class="flex">
+                <p>your total number of points : {{$auth.user.points}}</p>
+            </div>
+            <div v-show=" $auth.user.points > 0">
+               <button class="bg-blue-400 px-2 py-1 rounded-lg my-2 text-white" v-on:click="toggle" >use my points</button>
+                <form v-show=" show === true " action="">
+					<input type="number" name="promo" id="promo" v-model="points"  class="border-2 border-blue-300">
+                    <p v-show=" points > $auth.user.points" class="text-red-400"> ur number points is wrong ! please enter the right number</p>
+				</form>
             </div>
             
                  <button class="bg-black text-white text-xl py-3 mx-3 mt-8"><nuxt-link to="/order/checkout">Pay</nuxt-link></button>
@@ -27,8 +37,6 @@
             </div>
         </div>
        
-        <!-- <purchase-card v-for=" item in cart " :key="item.id" :item ="item"/>
-        <p>the total on your cart :{{ total}} </p> -->
     </div>
 </template>
 <script>
@@ -40,11 +48,32 @@ export default {
         return {
             cart: [],
             total: '',
+            show: false,
+            points: 0,
+        }
+    },
+    computed:{
+        getTotal(){
+            let res = 0;
+            if(this.points != null){
+            this.$store.commit('setPoints',this.points)
+           
+            res = this.total- (this.total * this.points*0.03/100)
+            res=res.toFixed(2)
+             this.$store.commit('setTotal',res)
+            }
+            else{
+                res = this.total  
+                res = res.toFixed(2)
+             this.$store.commit('setTotal',res)
+            }
+            return res
         }
     },
     mounted(){
         this.getCart();
         this.getSum();
+       
     },
     methods: {
         async getCart(){
@@ -59,8 +88,12 @@ export default {
 
             const sum = await this.$axios.$get('/api/cart/sumProducts')
             this.total = sum
-             this.$store.commit('setTotal',sum)
+            console.log(sum)
+
             
+        },
+        toggle(){
+            this.show = !this.show
         }
     }
 }

@@ -1,10 +1,7 @@
 <template>
 
-    <div  class="h-screen md:flex">
-        <div class="mx-12 flex flex-row jutify-center space-x-3">
-            <ArrowCircleLeftIcon class="text-blue-400"/>
-         <nuxt-link to="/users/" class="text-blue-400 text-left">back</nuxt-link>
-        </div>
+    <div  class=" flex flex-col justify-center items-center">
+        
       <div class="flex md:w-1/2 justify-center py-10 items-center bg-white">
         <form @submit.prevent="register" class="bg-white">
           <h1 class="text-blue-600 text-center font-bold text-2xl mb-1">Add user</h1>
@@ -54,6 +51,10 @@
           
         </form>
       </div>
+      <div class="mx-12 flex flex-row jutify-center space-x-3">
+            <ArrowCircleLeftIcon class="text-blue-400"/>
+         <nuxt-link to="/users/" class="text-blue-400 text-left">back</nuxt-link>
+        </div>
     </div>
 </template>
 

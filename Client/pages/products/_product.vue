@@ -104,8 +104,8 @@ export default {
 
             const product = await this.$axios.$get(`/api/product/${this.$route.params.product}`)
             console.log(product)
-            this.product = product[0]
-            this.category = product[0].category
+            this.product = product
+            this.category = product.category
         },
 
         async countProduct(){

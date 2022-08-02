@@ -18,16 +18,16 @@
                   <img src="~assets/images/facebook-2.png" alt="" class="h-8">
 
                   <!-- link 2 -->
-                  <img src="~assets/images/facebook-2.png" alt="" class="h-8">
+                  <img src="~assets/images/instagram.png" alt="" class="h-8">
 
                   <!-- link 3 -->
-                  <img src="~assets/images/facebook-2.png" alt="" class="h-8">
+                  <img src="~assets/images/twitter.png" alt="" class="h-8">
 
                   <!-- link 4 -->
-                  <img src="~assets/images/facebook-2.png" alt="" class="h-8">
+                  <img src="~assets/images/whatsapp.png" alt="" class="h-8">
 
                   <!-- link 5 -->
-                  <img src="~assets/images/facebook-2.png" alt="" class="h-8">
+                  <img src="~assets/images/google.png" alt="" class="h-8">
               </div>
           </div>
           <!-- List container -->

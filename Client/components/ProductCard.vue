@@ -13,16 +13,25 @@
         </div>
        
     </div> -->
-    <div class="flex flex-col roundes-lg drop-shadow-md border-2 h-60 ">
+    <div class="flex flex-col roundes-lg drop-shadow-md border-2 h-80 ">
         <div class="img h-2/3">
            <nuxt-link :to="`/products/${productInfo.id}`">
             <img :src=" `http://localhost:8000/images/${productInfo.image_path}`" alt="" class="rounded-lg h-full w-full ">
             </nuxt-link>
         </div>
-        <div class="info-section flex flex-col p-3  h-1/3">
-        <div class="label">
-             <span class="text-sm px-2 bg-blue-200 rounded-lg  text-center ">{{ productInfo.category.label}}</span>
+        <div class="promo">
+            
         </div>
+        <div class="info-section flex flex-col p-3  h-1/3">
+        <div class="label flex flex-col justify-between md:flex-row">
+            <div>
+             <span class="text-sm px-2 bg-blue-200 rounded-lg  text-center ">{{ productInfo.category.label}}</span>
+             </div>
+             <div>
+             <span v-if="productInfo.promotion > 0" class="text-sm px-2 bg-red-200 rounded-lg  text-center ">- {{ productInfo.promotion}} %</span>
+             </div>
+        </div>
+       
          <h4 class="text-sm">{{productInfo.title}}</h4>
         <p>{{productInfo.price}}$</p>
 

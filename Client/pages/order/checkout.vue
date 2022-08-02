@@ -138,12 +138,15 @@ export default {
                 paymentProcessing: false,
                 cart: '',
                 total: 0,
+                points: 0,
                 
             }
         },
         async mounted() {
             this.cart = this.$store.getters.getCart
             this.total = this.$store.getters.getTotal
+            this.points = this.$store.getters.getPoints
+            
            
             this.stripe = await loadStripe('pk_test_51LJBEUB5sPcQL0hJccnFNwsELoTgWD49AXWG9XpFJmeqC8So9GnbWhkXz6wX6UZaPJoGkDDIhbYGuIJxyE5lwCTR00UrSQInrN');
             const elements = this.stripe.elements();
@@ -181,10 +184,11 @@ export default {
                     this.customer.amount = this.total*100;
                     this.customer.cart = JSON.stringify(this.cart)
                     console.log(this.customer)
-                      this.$axios.$post('/api/pay/', this.customer)
+                      this.$axios.$post(`/api/pay/${this.points}`, this.customer)
                         .then((response) => {
                             this.paymentProcessing = false;
                            // this.$axios.$delete('/api/purchase/delete')
+                           //this.$axios.$put(`/api/user/points/${this.points}/${this.$auth.user.id}`)
                             console.log(response);
                             this.$router.push("/order/summary");
                         })

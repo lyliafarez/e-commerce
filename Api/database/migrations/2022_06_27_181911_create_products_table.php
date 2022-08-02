@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description');
             $table->integer('price');
             $table->integer('stock');
+            $table->integer('promotion')->default(0);
             $table->string('image_path');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
